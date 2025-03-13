@@ -1,0 +1,25 @@
+version: '3.7'
+services:
+  zigbee2mqtt:
+    image: koenkk/zigbee2mqtt:${IMAGE_VERSION:-latest}
+    container_name: ${CONTAINER_NAME:-zigbee2mqtt-container}
+    hostname: ${CONTAINER_NAME:-zigbee2mqtt-container}
+    volumes:
+      - type: bind
+        source: ./conf
+        target: /app/data
+      - type: bind
+        source: /run/udev
+        target: /run/udev:ro
+      - /etc/localtime:/etc/localtime:ro
+    devices:
+      - ${USB_PORT:-/dev/ttyUSB0}:/dev/ttyUSB0
+    ports: 
+      - ${UI_PORT:-8080}:8080
+    networks: [z2m-network]
+    restart: unless-stopped
+
+networks:
+  z2m-network:
+    external: True
+    name: ${EXTERNAL_NETWORK:-homelab-network}

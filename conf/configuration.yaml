@@ -1,0 +1,47 @@
+frontend:
+  enabled: true
+  port: 8080
+
+# HA integration(MQTT discovery)
+homeassistant: true
+# allow new devices to join
+permit_join: false
+
+# Serial setting
+serial:
+  port: /dev/ttyUSB0
+  # Required only for skyconnect
+  adapter: zstack # Required for version >2.0
+  # adapter: ember
+  # adapter: ezsp
+
+# MQTT setting
+mqtt:
+  # MQTT base topic for z2m messages
+  base_topic: enflic
+  # MQTT server URL
+  server: mqtt://<mqtt-url>:<mqtt-port>
+  # MQTT server authentication, ucomment if not required
+  user: mqtt-user
+  password: mqtt-pass
+
+advanced:
+  homeassistant_legacy_entity_attributes: false
+  legacy_api: false
+  legacy_availability_payload: false
+  log_level: info
+  channel: 20
+  network_key: [1, 3, 5, 7, 9, 11, 13, 15, 0, 2, 4, 6, 8, 10, 12, 13]
+  # Optional: Logging level, options: debug, info, warning, error (default: info)
+  log_level: info
+  # Optional: Set log levels for certain namespaces hierarchies (default: {})
+  log_namespaced_levels:
+    z2m:mqtt: warning
+  timestamp_format: 'YYYY-MM-DD HH:mm:ss'
+
+availability:
+  enabled: true
+  active:
+    timeout: 10
+  passive:
+    timeout: 1500
